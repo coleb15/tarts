@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dandelion Sphere</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0F0F0F; --bg-alt: #141414; --bg-soft: #111111;
+  --border: #2A2A2A; --border-soft: #3A3429;
+  --text: #F7F3EC; --text-sec: #E8DDC8; --text-muted: #9B927F;
+  --gold: #B08A3E; --gold-soft: rgba(176,138,62,0.45);
+  --radius-lg: 32px; --radius-md: 28px; --radius-sm: 22px; --radius-pill: 999px;
+}
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+.serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+.container { width: 100%; max-width: 1320px; margin: 0 auto; padding: 0 40px; }
+@media(max-width:768px){ .container { padding: 0 20px; } }
+
+/* HEADER */
+header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--border); background: rgba(15,15,15,0.88); backdrop-filter: blur(12px); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 0; }
+.brand { background: none; border: none; cursor: pointer; color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 24px; letter-spacing: 0.04em; }
+nav { display: flex; align-items: center; gap: 32px; }
+.nav-btn { background: none; border: none; color: var(--text-sec); font-family: 'Inter', sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 0.22em; cursor: pointer; }
+.btn-primary { background: var(--gold); color: #000; border: none; border-radius: var(--radius-pill); padding: 14px 28px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+.btn-primary:hover { opacity: 0.85; }
+.btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--gold-soft); border-radius: var(--radius-pill); padding: 14px 28px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: border-color 0.2s; }
+.btn-secondary:hover { border-color: var(--gold); }
+@media(max-width:768px){ nav { display: none; } }
+
+/* PAGES */
+.page { display: none; }
+.page.active { display: block; }
+
+/* EYEBROW */
+.eyebrow { color: var(--gold); font-family: 'Inter', sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 0.28em; margin-bottom: 12px; }
+
+/* HERO */
+.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: 64px; min-height: 78vh; }
+@media(max-width:768px){ .hero-grid { grid-template-columns: 1fr; gap: 32px; min-height: auto; } }
+.hero-grid h1 { color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 64px; line-height: 1.02; font-weight: 500; max-width: 760px; }
+@media(max-width:768px){ .hero-grid h1 { font-size: 40px; } }
+.hero-grid .sub { margin: 28px 0 0; max-width: 650px; color: var(--text-sec); font-size: 22px; line-height: 1.8; }
+@media(max-width:768px){ .hero-grid .sub { font-size: 18px; } }
+.hero-btns { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 40px; }
+.card { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ratio-45 { aspect-ratio: 4/5; overflow: hidden; }
+.ratio-43 { aspect-ratio: 4/3; overflow: hidden; }
+.ratio-11 { aspect-ratio: 1/1; overflow: hidden; }
+
+/* STATEMENT */
+.statement { border-top: 1px solid #1A1A1A; padding: 120px 0; }
+.statement p { color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 42px; line-height: 1.3; font-weight: 500; max-width: 920px; }
+@media(max-width:768px){ .statement { padding: 72px 0; } .statement p { font-size: 28px; } }
+
+/* SECTIONS */
+.section { padding: 120px 0; }
+@media(max-width:768px){ .section { padding: 72px 0; } }
+.section-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 56px; }
+@media(max-width:768px){ .section-header { flex-direction: column; margin-bottom: 40px; } }
+.section-title h2 { color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 46px; line-height: 1.08; font-weight: 500; }
+@media(max-width:768px){ .section-title h2 { font-size: 30px; } }
+.section-title p { margin: 20px 0 0; color: var(--text-sec); font-size: 18px; line-height: 1.8; max-width: 760px; }
+.view-all { background: none; border: none; color: var(--gold); font-size: 14px; cursor: pointer; white-space: nowrap; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 32px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+@media(max-width:768px){ .grid-4, .grid-2 { grid-template-columns: 1fr; } }
+
+/* PRODUCT CARD */
+.product-card { background: none; border: none; padding: 0; text-align: left; cursor: pointer; width: 100%; }
+.product-card .card { transition: transform 0.25s ease; }
+.product-card:hover .card { transform: translateY(-6px); }
+.product-card h3 { margin: 20px 0 0; color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 24px; line-height: 1.15; font-weight: 500; }
+.product-card .price { margin: 8px 0 0; color: var(--gold); font-size: 15px; }
+
+/* INFO CARDS */
+.info-card { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 48px; }
+@media(max-width:768px){ .info-card { padding: 32px; } }
+.info-card h2 { color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 38px; line-height: 1.28; font-weight: 500; margin: 0; }
+@media(max-width:768px){ .info-card h2 { font-size: 28px; } }
+
+/* NEWSLETTER */
+.newsletter-card { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 56px; }
+@media(max-width:768px){ .newsletter-card { padding: 28px; } }
+.newsletter-card h2 { color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 52px; line-height: 1.08; font-weight: 500; max-width: 900px; }
+@media(max-width:768px){ .newsletter-card h2 { font-size: 30px; } }
+.newsletter-card p { margin: 20px 0 0; color: var(--text-sec); font-size: 18px; line-height: 1.8; max-width: 720px; }
+.newsletter-row { display: flex; gap: 12px; margin-top: 32px; max-width: 620px; }
+@media(max-width:768px){ .newsletter-row { flex-direction: column; } }
+.email-input { flex: 1; border-radius: var(--radius-pill); border: 1px solid var(--border-soft); background: #0B0B0B; color: var(--text); padding: 14px 20px; font-family: 'Inter', sans-serif; font-size: 16px; outline: none; }
+
+/* FOOTER */
+footer { margin-top: 96px; border-top: 1px solid var(--border); background: #0A0A0A; }
+.footer-inner { padding: 80px 0; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 40px; }
+@media(max-width:768px){ .footer-inner { grid-template-columns: 1fr; padding: 56px 0; } }
+.footer-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--text); }
+.footer-brand p { margin: 16px 0 0; max-width: 360px; color: var(--text-sec); font-size: 15px; line-height: 1.8; }
+.footer-links { display: flex; flex-direction: column; gap: 12px; }
+.footer-link { background: none; border: none; padding: 0; text-align: left; cursor: pointer; color: var(--text-sec); font-size: 15px; font-family: 'Inter', sans-serif; }
+.footer-link:hover { color: var(--text); }
+.footer-tagline { color: var(--gold); font-size: 15px; line-height: 1.8; }
+
+/* CRAFT GRID */
+.craft-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 56px; }
+@media(max-width:768px){ .craft-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+/* PRODUCT PAGE */
+.product-grid { display: grid; grid-template-columns: 54% 46%; gap: 56px; align-items: start; }
+@media(max-width:768px){ .product-grid { grid-template-columns: 1fr; gap: 32px; } }
+.gallery-thumbs { margin-top: 16px; display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.sticky-panel { position: sticky; top: 110px; }
+@media(max-width:768px){ .sticky-panel { position: static; } }
+.product-price { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 30px; line-height: 1.2; margin: 32px 0 0; }
+label { display: block; margin-bottom: 8px; color: #CBBEA7; font-size: 14px; font-family: 'Inter', sans-serif; }
+select { width: 100%; border-radius: var(--radius-pill); border: 1px solid var(--border-soft); background: #121212; color: var(--text); padding: 14px 20px; font-family: 'Inter', sans-serif; font-size: 16px; outline: none; appearance: none; cursor: pointer; }
+.product-actions { margin-top: 32px; display: flex; flex-direction: column; gap: 20px; }
+.muted { color: var(--text-muted); font-size: 14px; }
+.product-details { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 32px; }
+.product-details h2 { color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 500; }
+.product-details p { margin: 12px 0 0; color: var(--text-sec); font-size: 16px; line-height: 1.8; }
+.product-details ul { margin: 12px 0 0 20px; color: var(--text-sec); font-size: 16px; line-height: 1.8; }
+
+/* ABOUT */
+.about-image-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 56px; }
+@media(max-width:768px){ .about-image-grid { grid-template-columns: 1fr; gap: 32px; } }
+.about-text h2 { color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 46px; line-height: 1.08; font-weight: 500; }
+@media(max-width:768px){ .about-text h2 { font-size: 30px; } }
+.about-text p { margin: 20px 0 0; color: var(--text-sec); font-size: 18px; line-height: 1.8; }
+.about-card { margin-top: 64px; padding: 56px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius-lg); }
+@media(max-width:768px){ .about-card { padding: 28px; } }
+.about-card h2 { color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 46px; line-height: 1.08; font-weight: 500; }
+@media(max-width:768px){ .about-card h2 { font-size: 30px; } }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+@media(max-width:768px){ .contact-grid { grid-template-columns: 1fr; gap: 32px; } }
+.contact-info p { margin: 0; color: var(--text-sec); font-size: 16px; line-height: 1.8; }
+.contact-form { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; display: flex; flex-direction: column; gap: 16px; }
+@media(max-width:768px){ .contact-form { padding: 24px; } }
+input[type="text"], input[type="email"], input:not([type]) { width: 100%; border-radius: var(--radius-pill); border: 1px solid var(--border-soft); background: var(--bg); color: var(--text); padding: 14px 20px; font-family: 'Inter', sans-serif; font-size: 16px; outline: none; }
+textarea { width: 100%; min-height: 180px; border-radius: var(--radius-md); border: 1px solid var(--border-soft); background: var(--bg); color: var(--text); padding: 16px 20px; font-family: 'Inter', sans-serif; font-size: 16px; outline: none; resize: vertical; }
+input::placeholder, textarea::placeholder { color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <button class="brand serif" onclick="navigate('home')">Dandelion Sphere</button>
+      <nav>
+        <button class="nav-btn" onclick="navigate('home')">Home</button>
+        <button class="nav-btn" onclick="navigate('shop')">Shop</button>
+        <button class="nav-btn" onclick="navigate('about')">About</button>
+        <button class="nav-btn" onclick="navigate('contact')">Contact</button>
+      </nav>
+      <button class="btn-secondary" onclick="navigate('shop')">Shop</button>
+    </div>
+  </div>
+</header>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <section style="padding: 56px 0 80px;">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Luxury objects</p>
+          <h1 class="serif">A dandelion carries hundreds of seeds, each one capable of becoming something new.</h1>
+          <p class="sub">For a brief moment, it exists in perfect balance - before it disappears into the wind. This moment is preserved here.</p>
+          <div class="hero-btns">
+            <button class="btn-primary" onclick="navigate('shop')">Shop the collection</button>
+            <button class="btn-secondary" onclick="navigate('about')">Discover the story</button>
+          </div>
+        </div>
+        <div class="card" style="box-shadow: 0 24px 60px rgba(0,0,0,0.3);">
+          <div class="ratio-45">
+            <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1600&q=80" alt="Dandelion Sphere hero">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="statement">
+    <div class="container">
+      <p class="serif">Dandelion Sphere preserves one of nature's most delicate moments in sculptural resin forms. Each piece is created to bring stillness, beauty, and quiet wonder into an interior.</p>
+    </div>
+  </section>
+
+  <section class="section" style="border-top: 1px solid #1A1A1A;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title">
+          <p class="eyebrow">The collection</p>
+          <h2 class="serif">Subtle, poetic objects designed for timeless spaces.</h2>
+          <p>A series of handmade resin spheres, each holding a real dandelion in suspension.</p>
+        </div>
+        <button class="view-all" onclick="navigate('shop')">View all</button>
+      </div>
+      <div class="grid-4" id="home-products"></div>
+    </div>
+  </section>
+
+  <section class="section" style="border-top: 1px solid #1A1A1A;">
+    <div class="container">
+      <div class="craft-grid">
+        <div class="card">
+          <div class="ratio-43">
+            <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1600&q=80" alt="Craftsmanship">
+          </div>
+        </div>
+        <div class="section-title">
+          <p class="eyebrow">Handmade with care</p>
+          <h2 class="serif">Every piece is individual.</h2>
+          <p>Each sphere is individually made by hand. No two dandelions are ever identical, which gives every piece its own character, balance, and internal rhythm.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-2">
+        <div class="info-card">
+          <p class="eyebrow">Designed to live beautifully in a space</p>
+          <h2 class="serif">Whether placed on a desk, console, bedside table, or in a library, each sphere brings a sense of calm presence.</h2>
+        </div>
+        <div class="info-card">
+          <p class="eyebrow">Why collectors love them</p>
+          <h2 class="serif">Collected for their rarity, elegance, and emotional simplicity, these pieces are chosen as meaningful gifts and lasting interior objects.</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="newsletter-card">
+        <p class="eyebrow">Newsletter</p>
+        <h2 class="serif">Join the world of Dandelion Sphere</h2>
+        <p>Receive first access to new pieces, special editions, and news from the collection.</p>
+        <div class="newsletter-row">
+          <input class="email-input" type="email" placeholder="Your email address">
+          <button class="btn-primary">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- SHOP -->
+<div id="page-shop" class="page">
+  <div class="container" style="padding-top: 56px; padding-bottom: 80px; min-height: 100vh;">
+    <div class="section-title">
+      <p class="eyebrow">Shop</p>
+      <h2 class="serif">Shop the collection</h2>
+      <p>Discover handmade dandelion spheres in a range of sizes. Each piece is unique and created to bring a quiet sculptural presence into the home.</p>
+    </div>
+    <div class="grid-4" style="margin-top: 48px;" id="shop-products"></div>
+  </div>
+</div>
+
+<!-- PRODUCT -->
+<div id="page-product" class="page">
+  <div class="container" style="padding-top: 56px; padding-bottom: 80px; min-height: 100vh;">
+    <div class="product-grid">
+      <div>
+        <div class="card"><div class="ratio-45"><img id="product-img" src="" alt=""></div></div>
+        <div class="gallery-thumbs" id="product-thumbs"></div>
+      </div>
+      <div class="sticky-panel">
+        <p class="eyebrow">Product</p>
+        <h1 class="serif" id="product-name" style="color: var(--text); font-size: 56px; line-height: 1.05; font-weight: 500;"></h1>
+        <p id="product-intro" style="margin: 20px 0 0; color: var(--text-sec); font-size: 22px; line-height: 1.7;"></p>
+        <p id="product-price" class="product-price"></p>
+        <div class="product-actions">
+          <div>
+            <label>Size</label>
+            <select id="product-size-select">
+              <option>6 cm</option><option>7 cm</option><option>8 cm</option><option>9 cm</option>
+            </select>
+          </div>
+          <div>
+            <label>Stand option</label>
+            <select>
+              <option>Without stand</option><option>Small stand</option><option>Big stand</option>
+            </select>
+          </div>
+          <button class="btn-primary" style="width: 100%;">Add to cart</button>
+          <p class="muted">Carefully packed for safe delivery</p>
+        </div>
+        <div class="product-details">
+          <div>
+            <h2>Description</h2>
+            <p id="product-desc"></p>
+          </div>
+          <div>
+            <h2>Details</h2>
+            <ul><li>Real dandelion</li><li>Handmade individually</li><li>Each piece unique</li><li>Designed for interior display</li></ul>
+          </div>
+          <div>
+            <h2>Packaging and shipping</h2>
+            <p>Each piece is carefully packed to ensure safe arrival and presented with the same care with which it was made.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 96px;">
+      <div class="section-title">
+        <p class="eyebrow">Related</p>
+        <h2 class="serif">You may also like</h2>
+      </div>
+      <div class="grid-4" style="margin-top: 40px;" id="related-products"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="page-about" class="page">
+  <div class="container" style="padding-top: 56px; padding-bottom: 80px; min-height: 100vh;">
+    <div class="section-title">
+      <p class="eyebrow">About</p>
+      <h2 class="serif">About Dandelion Sphere</h2>
+      <p>Dandelion Sphere began with a fascination for a brief and fragile moment in nature - a form so delicate that it exists only for an instant before disappearing. By preserving this moment in resin, it becomes something lasting, contemplative, and quietly extraordinary.</p>
+    </div>
+    <div class="about-image-grid">
+      <div class="card">
+        <div class="ratio-45">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80" alt="About Dandelion Sphere">
+        </div>
+      </div>
+      <div class="about-text">
+        <h2 class="serif">A preserved moment</h2>
+        <p>Each piece is made by hand, with patience and precision. The process respects the individuality of the dandelion itself, allowing nature to remain at the centre of the object.</p>
+        <p>The beauty of a dandelion lies not only in its form, but in what it suggests - transience, possibility, lightness, and change. Dandelion Sphere turns that passing moment into an object that can remain in a room for years.</p>
+      </div>
+    </div>
+    <div class="about-card">
+      <p class="eyebrow">Handmade at Cedar House</p>
+      <h2 class="serif">A slower way of making.</h2>
+      <p style="margin: 20px 0 0; max-width: 820px; color: var(--text-sec); font-size: 18px; line-height: 1.8;">Created in a setting shaped by stillness and landscape, each sphere reflects a slower way of making. The work is careful, tactile, and deeply focused on material, light, and proportion.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="page-contact" class="page">
+  <div class="container" style="padding-top: 56px; padding-bottom: 80px; min-height: 100vh;">
+    <div class="contact-grid">
+      <div>
+        <div class="section-title">
+          <p class="eyebrow">Contact</p>
+          <h2 class="serif">Get in touch</h2>
+          <p>For enquiries, orders, collaborations, or private requests, please get in touch.</p>
+        </div>
+        <div class="contact-info" style="margin-top: 40px; display: flex; flex-direction: column; gap: 12px;">
+          <p>Email: info@dandelionsphere.com</p>
+          <p>Instagram: @dandelionsphere</p>
+          <p>WhatsApp: +31 6 1234 5678</p>
+        </div>
+      </div>
+      <div class="contact-form">
+        <input type="text" placeholder="Name">
+        <input type="email" placeholder="Email">
+        <textarea placeholder="Message"></textarea>
+        <button class="btn-primary">Send message</button>
+        <p class="muted">We will respond as soon as possible.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-brand-name serif">Dandelion Sphere</span>
+        <p>Handmade sculptural objects preserving a fleeting natural moment.</p>
+      </div>
+      <div class="footer-links">
+        <button class="footer-link" onclick="navigate('shop')">Shop</button>
+        <button class="footer-link" onclick="navigate('about')">About</button>
+        <button class="footer-link" onclick="navigate('contact')">Contact</button>
+      </div>
+      <div>
+        <p class="footer-tagline">Preserving a fleeting natural moment.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const products = [
+  { id:"6cm", name:"Dandelion Sphere - 6 cm", price:"€75", size:"6 cm", stand:"Small stand", intro:"A fleeting natural moment, preserved in stillness.", description:"A real dandelion suspended in crystal-clear resin - handmade as a sculptural object for timeless interiors.", image:"https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1400&q=80" },
+  { id:"7cm", name:"Dandelion Sphere - 7 cm", price:"€85", size:"7 cm", stand:"Small stand", intro:"A delicate object with quiet presence.", description:"A real dandelion preserved in clear resin for calm, refined interiors.", image:"https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1400&q=80" },
+  { id:"8cm", name:"Dandelion Sphere - 8 cm", price:"€95", size:"8 cm", stand:"Big stand", intro:"Balanced, sculptural, and quietly luxurious.", description:"A handmade resin sphere containing a real dandelion, designed to live beautifully in a space.", image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80" },
+  { id:"9cm", name:"Dandelion Sphere - 9 cm", price:"€110", size:"9 cm", stand:"Big stand", intro:"A more sculptural presence for refined interiors.", description:"A real dandelion, preserved in crystal-clear resin as a timeless object of natural beauty.", image:"https://images.unsplash.com/photo-1511300636408-a63a89df3482?auto=format&fit=crop&w=1400&q=80" },
+];
+
+let currentProduct = products[3];
+
+function productCard(p) {
+  const btn = document.createElement('button');
+  btn.className = 'product-card';
+  btn.innerHTML = `
+    <div class="card"><div class="ratio-45"><img src="${p.image}" alt="${p.name}" loading="lazy"></div></div>
+    <h3 class="serif">${p.name}</h3>
+    <p class="price">${p.price}</p>
+  `;
+  btn.addEventListener('click', () => openProduct(p));
+  return btn;
+}
+
+function renderProducts(containerId, list) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = '';
+  list.forEach(p => el.appendChild(productCard(p)));
+}
+
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (page === 'home') renderProducts('home-products', products);
+  if (page === 'shop') renderProducts('shop-products', products);
+  if (page === 'product') renderProductPage();
+}
+
+function openProduct(p) {
+  currentProduct = p;
+  navigate('product');
+}
+
+function renderProductPage() {
+  document.getElementById('product-img').src = currentProduct.image;
+  document.getElementById('product-img').alt = currentProduct.name;
+  document.getElementById('product-name').textContent = currentProduct.name;
+  document.getElementById('product-intro').textContent = currentProduct.intro;
+  document.getElementById('product-price').textContent = currentProduct.price;
+  document.getElementById('product-desc').textContent = currentProduct.description;
+  document.getElementById('product-size-select').value = currentProduct.size;
+
+  const thumbs = document.getElementById('product-thumbs');
+  thumbs.innerHTML = '';
+  [currentProduct.image, products[0].image, products[1].image].forEach(img => {
+    const d = document.createElement('div');
+    d.className = 'card';
+    d.style.borderRadius = '22px';
+    d.innerHTML = `<div class="ratio-11"><img src="${img}" alt="" loading="lazy"></div>`;
+    thumbs.appendChild(d);
+  });
+
+  const related = products.filter(p => p.id !== currentProduct.id);
+  renderProducts('related-products', related);
+}
+
+// Init
+renderProducts('home-products', products);
+</script>
+</body>
+</html>
